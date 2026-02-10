@@ -1,4 +1,7 @@
+# Ignore the generated vector database
+faiss_index/
+
+# Ignore Python environment and cache
 venv/
-.env
 __pycache__/
-*.pyc
+.env
