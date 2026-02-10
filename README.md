@@ -34,7 +34,7 @@ UI: Streamlit
 Ensure you have a .env file in the root directory with your Hugging Face token:
 
 Code snippet
-HUGGINGFACE_API_TOKEN=your_token_here
+HUGGINGFACEHUB_API_TOKEN=your_token_here
 2. Installation
 Bash
 # Clone the repo
@@ -76,4 +76,3 @@ sequenceDiagram
     S->>L: Context + System Prompt + Query
     L-->>S: Grounded response with citations
     S->>U: Final Answer
-```
