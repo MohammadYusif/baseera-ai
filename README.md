@@ -8,12 +8,12 @@ Baseera is a Retrieval-Augmented Generation (RAG) system built to provide empath
 
 ## 🏗️ System Architecture
 
-The following diagram illustrates the RAG lifecycle implemented in this project:
+The following diagram illustrates the upgraded RAG lifecycle using Semantic Chunking:
 
 ```mermaid
 graph TD
     A[PDF Data Sources] -->|PyPDFDirectoryLoader| B[ingest.py]
-    B -->|RecursiveCharacterTextSplitter| C{Vector Store}
+    B -->|SemanticChunker| C{Vector Store}
     C -->|HuggingFaceEmbeddings| D[FAISS Index]
 
     E[User Query] -->|Streamlit UI| F[app.py]
@@ -45,6 +45,12 @@ Create a `.env` file in the project root and add your Hugging Face token:
 HUGGINGFACEHUB_API_TOKEN=your_token_here
 ```
 
+Install the experimental package required for semantic processing:
+
+```bash
+pip install langchain-experimental
+```
+
 ---
 
 ### 2️⃣ Installation
@@ -65,7 +71,7 @@ pip install -r requirements.txt
 
 ---
 
-### 3️⃣ Data Ingestion (RAG Pipeline)
+### 3️⃣ Data Ingestion (Upgraded RAG Pipeline)
 
 Before running the application, process the PDF documents inside the `data/` folder to generate the local FAISS vector store:
 
@@ -73,11 +79,10 @@ Before running the application, process the PDF documents inside the `data/` fol
 python ingest.py
 ```
 
-This step:
+What makes this version (v1.0.0) different?
 
-- Loads all PDFs automatically
-- Splits them into semantic chunks
-- Embeds and stores them locally using FAISS
+- **Intelligence:** It no longer splits text every 600 characters. Instead, it uses HuggingFaceEmbeddings to determine when a topic or meaning changes, keeping medical protocols intact.
+- **Precision:** By ensuring sentences aren't cut in half, the Llama 3.1 model has cleaner context to work with, significantly reducing the "ugly" character hallucinations seen in earlier versions.
 
 ---
 
@@ -91,8 +96,14 @@ streamlit run app.py
 
 ## 🧠 Key Features
 
+- **Semantic Document Processing:**
+  Utilizes AI-driven chunking to preserve the integrity of Arabic medical guidelines, ensuring retrieval occurs at the "thought" level rather than the "character" level.
+
 - **Grounded Citations:**
-  Every response begins with _“Based on [Source]…”_ to ensure transparency and trust.
+  Every response begins with _"Based on [Source]…"_ to ensure transparency and trust.
+
+- **Localized RTL Support:**
+  Dynamic UI rendering that automatically detects Arabic text and aligns it Right-to-Left (RTL) for a native user experience.
 
 - **Automatic Directory Ingestion:**
   Any new PDF added to the `data/` folder is picked up during the next ingestion run.
