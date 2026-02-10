@@ -138,32 +138,55 @@ sequenceDiagram
 
 ---
 
-.
+## 🛠️ Future Improvements & Roadmap
 
-🛠️ Future Improvements & Roadmap
-While Baseera is a functional RAG MVP, the following enhancements would elevate it to a production-grade system, particularly for the Saudi market:
+While Baseera is a functional RAG MVP, the following enhancements would elevate it to a production-grade system, particularly for the Saudi market.
 
-1. Enhanced Arabic Linguistic Processing
-   Semantic Chunking for Arabic: Transition from character-based splitting to Semantic Chunking using embeddings specifically trained on Arabic (e.g., AraBERT or Marbert) to ensure medical contexts are never severed mid-sentence.
+---
 
-Morphological Analysis: Integrating tools like CAMeL Tools for Arabic preprocessing (lemmatization and diacritic handling) to improve retrieval accuracy for different word forms.
+### 1️⃣ Enhanced Arabic Linguistic Processing
 
-2. Saudi Dialect Support (Ammiyah)
-   Prompt Fine-Tuning: Enhancing the System Prompt to better interpret Saudi dialects (Najdi, Hejazi, etc.) while maintaining a response in formal Fusha, ensuring the AI understands local slang for substances without mimicking it unprofessionally.
+- **Semantic Chunking for Arabic**  
+  Transition from character-based splitting to semantic chunking using embeddings trained on Arabic (e.g., AraBERT, MARBERT) to prevent medical or legal concepts from being split mid-sentence.
 
-3. Advanced RAG Techniques
-   Hybrid Search: Combining BM25 keyword search with Vector search. This ensures that specific medical terms or Saudi law IDs (which can be "lost" in embeddings) are found with 100% precision.
+- **Morphological Analysis**  
+  Integrate Arabic NLP tools such as **CAMeL Tools** for lemmatization and diacritic normalization, improving retrieval accuracy across different word forms.
 
-Reranking Layer: Adding a Cross-Encoder reranker (like BGE-Reranker) to re-evaluate the top 10 results from FAISS, ensuring the most culturally and medically relevant chunk is fed to Llama 3.1.
+---
 
-4. System Evaluation (RAGAS)
-   Automated Quality Metrics: Implementing the RAGAS framework to measure:
+### 2️⃣ Saudi Dialect (Ammiyah) Understanding
 
-Faithfulness: Does the Arabic response actually come from the PDF?
+- **Dialect-Aware Prompting**  
+  Enhance the system prompt to better interpret Saudi dialects (Najdi, Hejazi, Southern, etc.) while maintaining responses in formal Fusha.
 
-Answer Relevance: Does it directly address the user's struggle?
+- **Substance Slang Recognition**  
+  Improve understanding of local slang related to substances without reproducing it in responses, preserving professionalism and safety.
 
-Context Precision: Is the retrieved document snippet actually useful?
+---
+
+### 3️⃣ Advanced RAG Techniques
+
+- **Hybrid Retrieval (BM25 + Vector Search)**  
+  Combine keyword-based search with vector similarity to ensure high-precision retrieval for medical terms, legal references, and protocol identifiers.
+
+- **Reranking Layer**  
+  Introduce a cross-encoder reranker (e.g., **BGE-Reranker**) to re-score the top-k FAISS results and ensure the most medically and culturally relevant context is selected.
+
+---
+
+### 4️⃣ System Evaluation & Quality Assurance (RAGAS)
+
+- **Automated RAG Metrics**  
+  Integrate the **RAGAS** framework to continuously evaluate system quality using metrics such as:
+  - **Faithfulness:** Is the response grounded in the source PDFs?
+  - **Answer Relevance:** Does it directly address the user’s concern?
+  - **Context Precision:** Is the retrieved context truly useful?
+
+- **Regression Testing for Prompts**  
+  Track performance changes when updating prompts, models, or retrieval strategies.
+
+---
+
 
 ## ⚠️ Disclaimer
 
